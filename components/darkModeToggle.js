@@ -6,7 +6,7 @@ export default function DarkModeToggle() {
         return (
           <Stack>
             <Set>
-              <Button onClick={() => setColorMode(colorMode!="default" ? "default": "dark")}>{colorMode=="default" ? "light": "dark"}</Button>
+              <Button variant="ghost" onClick={() => setColorMode(colorMode!="default" ? "default": "dark")}>{colorMode=="default" ? "light": "dark"}</Button>
 
             </Set>
           </Stack>

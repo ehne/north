@@ -37,13 +37,11 @@ export default function Header() {
     },
   });
   return (
-    <TopNav paddingY="major-2">
+    <TopNav paddingY="major-2" position="fixed" width="100%">
       <TopNav.Section>
-        {/* <TopNav.Item>
-            <Text use="h1" use="emphasis" paddingLeft="major-2">North</Text>
-          </TopNav.Item> */}
+
       </TopNav.Section>
-      <TopNav.Section paddingX="major-1">
+      <TopNav.Section paddingX="major-1" >
         <TopNav.Item paddingRight="major-1">
           <About></About>
         </TopNav.Item>

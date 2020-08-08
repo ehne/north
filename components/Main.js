@@ -1,4 +1,4 @@
-import { Stack,Button, Container, Alert, Text,Callout } from "bumbag";
+import { Stack,Button, Container, Alert, Text,Callout,Heading } from "bumbag";
 const months = [
   "Jan",
   "Feb",
@@ -116,6 +116,7 @@ class Main extends React.Component {
 
 componentDidMount(){
     this.reload()
+
 }
   reload(){
     var comp = this;
@@ -126,9 +127,12 @@ componentDidMount(){
     return (
       <>
       <Header></Header>
-      <Container breakpoint="tablet">
-      <Container isFluid>
-        <Stack spcaing="minor-1">
+      <Container breakpoint="tablet" >
+      <Container isFluid paddingTop="major-10" paddingBottom="major-2">
+        <Heading>
+            North
+        </Heading>
+        <Stack >
             {/* <Button onClick={()=>this.reload()} width="100%" palette="primary">Refresh</Button> */}
             {
                 ()=>{if (Cookies.get("compassURL")!=undefined) {

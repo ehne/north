@@ -1,7 +1,10 @@
 import Head from 'next/head'
-import { Provider as BumbagProvider, Button, Icon} from 'bumbag';
+import { Provider as BumbagProvider, Button, Icon, Container} from 'bumbag';
 import DarkModeToggle from "../components/darkModeToggle"
 import Header from "../components/Header"
+
+import Main from "../components/Main"
+
 const theme = {
   Icon: {
     icons: {
@@ -23,7 +26,11 @@ export default function Home() {
       </Head>
 
       <Header></Header>
-
+      <Container breakpoint="tablet">
+      <Container isFluid>
+        <Main></Main>
+      </Container>
+      </Container>
       
     </BumbagProvider>
   )

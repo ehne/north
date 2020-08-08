@@ -11,6 +11,7 @@ import {
   Input,
   Link} from "bumbag";
 import DarkModeToggle from "./darkModeToggle";
+import About from "./About"
 import { useFormik } from "formik";
 import Cookies from 'js-cookie'
 import {SettingsIcon} from '@primer/octicons-react'
@@ -28,9 +29,14 @@ export default function Header() {
     },
   });
   return (
-    <TopNav>
-      <TopNav.Section></TopNav.Section>
-      <TopNav.Section paddingY="major-2" paddingX="major-1">
+    <TopNav paddingY="major-2">
+      <TopNav.Section>
+          {/* <TopNav.Item>
+            <Text use="h1" use="emphasis" paddingLeft="major-2">North</Text>
+          </TopNav.Item> */}
+      </TopNav.Section>
+      <TopNav.Section  paddingX="major-1">
+          <TopNav.Item paddingRight="major-1"><About></About></TopNav.Item>
         <TopNav.Item paddingRight="major-1">
           <Modal.State>
             <Dialog.Modal
@@ -39,7 +45,8 @@ export default function Header() {
               showActionButtons
               actionButtonsProps={{
                 onClickSubmit: formik.handleSubmit,
-                cancelText:"Close"
+                cancelText:"Close",
+                submitText:"Save"
               }}
             >
               <Paragraph>
@@ -52,7 +59,7 @@ export default function Header() {
                 box at the bottom of the page.
                 <Disclosure.State>
                   <Disclosure paddingLeft="minor-1">
-                    <Link use="Button"> Show Image Instructions</Link>
+                    <Link> Show Image Instructions</Link>
                   </Disclosure>
                   <Disclosure.Content>
                     <Image src="./images/setup1.png" width="100%" />

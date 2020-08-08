@@ -24,7 +24,7 @@ export default function Header() {
       compassURL: Cookies.get("compassURL"),
     },
     onSubmit: (values) => {
-      Cookies.set("compassURL", values["compassURL"]);
+      Cookies.set("compassURL", values["compassURL"],{ expires: 365 });
       alert("saved");
       // this is a really yucky way of getting it to load the associated data.
       // TODO: Look into maybe using some kind of react hook or something to trigger the main state to reload.
@@ -56,6 +56,7 @@ export default function Header() {
                 cancelText: "Close",
                 submitText: "Save",
               }}
+              
             >
               <Paragraph>
                 <Text use="strong">North</Text> requires the use of your compass
@@ -86,7 +87,7 @@ export default function Header() {
                 at the top of your compass page if there is no calendar link in
                 the green box.
               </Paragraph>
-              <FieldWrapper label="Compass Calendar Link">
+              <FieldWrapper label="Compass Calendar Link" paddingBottom="major-2"> 
                 <Input
                   id="compassURL"
                   name="compassURL"

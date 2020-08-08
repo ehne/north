@@ -1,4 +1,4 @@
-import { Stack,Button, Container, Alert, Text,Callout,Heading } from "bumbag";
+import { Box, Button, Container, Alert, Text, Stack, Heading } from "bumbag";
 const months = [
   "Jan",
   "Feb",
@@ -17,7 +17,9 @@ import React, { useState } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
 import Events from "./Events";
-import Header from "./Header"
+import Header from "./Header";
+import { SyncIcon } from "@primer/octicons-react";
+
 function convertWebcalToHttp(_input) {
   return _input.replace("webcal://", "https://");
 }
@@ -54,10 +56,9 @@ function converticsDatetoDate(_icsDate) {
 }
 
 function getData(comp) {
+  comp.setState({ loading: true });
   axios
-    .get(convertWebcalToHttp(
-        `${Cookies.get("compassURL")}`
-        ))
+    .get(convertWebcalToHttp(`${Cookies.get("compassURL")}`))
     .then(function (response) {
       // SPLITS THE LONG TEXT DOCUMENT INTO USABLE CHUNKS
 
@@ -69,29 +70,30 @@ function getData(comp) {
       var events_i = 0;
       for (let i = 0; i < lines.length; i++) {
         if (lines[i].includes("DTSTART")) {
-            // this one gets the start time of the event
-            var date = lines[i].split(":");
-            events[events_i] = { date: date[1] };
-
+          // this one gets the start time of the event
+          var date = lines[i].split(":");
+          events[events_i] = { date: date[1] };
         } else if (lines[i].includes("SUMMARY")) {
-            // this one basically just gets the title of the event
-            var title = lines[i].split(":");
-            events[events_i]["title"] = title[1];
-
+          // this one basically just gets the title of the event
+          var title = lines[i].split(":");
+          events[events_i]["title"] = title[1];
         } else if (lines[i].includes("LOCATION")) {
-            // this one just gets the Location/room of the event
-            var location = lines[i].split(":");
-            events[events_i]["location"] = location[1];
-
+          // this one just gets the Location/room of the event
+          var location = lines[i].split(":");
+          events[events_i]["location"] = location[1];
         } else if (lines[i].includes("END:VEVENT")) {
-            // sees that the specific event has ended and moves to the next one.
-            events_i++;
+          // sees that the specific event has ended and moves to the next one.
+          events_i++;
         }
       }
       return events;
     })
-    .catch((error)=>[
-        {"date":"20201110T040000Z", "title":"Error", "location":"Please press \"Setup\""}
+    .catch((error) => [
+      {
+        date: "20201110T040000Z",
+        title: "Error",
+        location: 'Please press "Setup"',
+      },
     ])
     .then(function (events) {
       // CONVERTS YUCKY ICS FORMAT DATES INTO UTC JS DATE OBJECTS.
@@ -102,7 +104,8 @@ function getData(comp) {
       }
       // sorts the dates into the correct order, as opposed to whatever was going on before
       events.sort((a, b) => a["date"] - b["date"]);
-      comp.setState({ e: events });
+      comp.setState({ e: events, loading: false });
+      console.log(comp.state)
     });
 }
 
@@ -110,45 +113,76 @@ class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      e: []
+      e: [],
+      loading: false,
     };
   }
 
-componentDidMount(){
-    this.reload()
+  componentDidMount() {
+    this.reload();
+  }
 
-}
-  reload(){
+  reload() {
     var comp = this;
     getData(comp);
   }
 
+  ReloadButton (props){
+    if (props.s.loading==true) {
+      return (
+        <Button
+          isLoading
+          size="small"
+          position="fixed"
+          left="major-2"
+          top="major-3"
+          variant="ghost"
+
+        >
+          <SyncIcon />
+        </Button>
+      );
+    } else {
+      return (
+        null
+      );
+    }
+  }
   render() {
     return (
       <>
-      <Header></Header>
-      <Container breakpoint="tablet" >
-      <Container isFluid paddingTop="major-10" paddingBottom="major-2">
-        <Heading>
-            North
-        </Heading>
-        <Stack >
-            {/* <Button onClick={()=>this.reload()} width="100%" palette="primary">Refresh</Button> */}
-            {
-                ()=>{if (Cookies.get("compassURL")!=undefined) {
-                    return(<Events events={this.state.e}></Events>)
-                } else {
-                    return(
-                        <Alert title="An error occurred" type="danger" variant="tint">
-                            You haven't connected your Compass calendar to North. Please press the "Setup" button in the top right hand corner to fix this problem.
-                        </Alert>
-                    )
-                }}
-            }
+        <Header ></Header>
+        <Container breakpoint="tablet">
+          <Container isFluid paddingTop="major-10" paddingBottom="major-2">
+            <Stack >
+            <this.ReloadButton s={this.state}></this.ReloadButton>
+            </Stack>
             
-        </Stack>
-      </Container>
-      </Container>
+
+            <Heading>North</Heading>
+            <Box>
+              {() => {
+                if (Cookies.get("compassURL") != undefined) {
+                  return (
+                    <Events events={this.state.e} spacing="major-2"></Events>
+                  );
+                } else {
+                  return (
+                    <Alert
+                      title="An error occurred"
+                      type="danger"
+                      variant="tint"
+                    >
+                      You haven't connected your Compass calendar to North.
+                      Please press the "Setup" button in the top right hand
+                      corner to fix this problem.
+                    </Alert>
+                  );
+                }
+              }}
+            </Box>
+          </Container>
+        </Container>
       </>
     );
   }

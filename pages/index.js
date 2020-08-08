@@ -10,9 +10,16 @@ const theme = {
 };
 
 export default function Home() {
-  const { colorMode } = useColorMode();
+  const { colorMode, setColorMode } = useColorMode();
+ 
   return (
-    <BumbagProvider theme={theme}>
+    <BumbagProvider colorMode="dark" theme={
+      {
+        modes: {
+          enableLocalStorage: false
+        }
+      }
+    }>
       <Head>
         <title>North | darcylf.me</title>
         <link rel="icon" href="/favicon.ico" />

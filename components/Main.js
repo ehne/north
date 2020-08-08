@@ -1,4 +1,4 @@
-import { Box, Button, Container, Alert, Text, Stack, Heading } from "bumbag";
+import { Box, Button, Container, Alert, Text, Stack, Heading, useColorMode } from "bumbag";
 const months = [
   "Jan",
   "Feb",
@@ -109,6 +109,7 @@ function getData(comp) {
     });
 }
 
+
 class Main extends React.Component {
   constructor(props) {
     super(props);
@@ -116,6 +117,7 @@ class Main extends React.Component {
       e: [],
       loading: false,
     };
+    
   }
 
   componentDidMount() {
@@ -125,6 +127,7 @@ class Main extends React.Component {
   reload() {
     var comp = this;
     getData(comp);
+    
   }
 
   ReloadButton (props){

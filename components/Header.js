@@ -16,6 +16,7 @@ import About from "./About";
 import { useFormik } from "formik";
 import Cookies from "js-cookie";
 import { SettingsIcon } from "@primer/octicons-react";
+import {Main} from "./Main";
 
 export default function Header() {
   const formik = useFormik({
@@ -28,6 +29,11 @@ export default function Header() {
       // this is a really yucky way of getting it to load the associated data.
       // TODO: Look into maybe using some kind of react hook or something to trigger the main state to reload.
       window.location.reload(false);
+
+      // yknow how i said this was gross?
+      // yeah, well, it kinda broke on deployment. 
+      //Main.reload();
+      
     },
   });
   return (

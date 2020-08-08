@@ -1,4 +1,4 @@
-import { Stack } from "bumbag";
+import { Stack,Button, Container, Alert, Text,Callout } from "bumbag";
 const months = [
   "Jan",
   "Feb",
@@ -17,6 +17,7 @@ import React, { useState } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
 import Events from "./Events";
+import Header from "./Header"
 function convertWebcalToHttp(_input) {
   return _input.replace("webcal://", "https://");
 }
@@ -54,7 +55,9 @@ function converticsDatetoDate(_icsDate) {
 
 function getData(comp) {
   axios
-    .get(convertWebcalToHttp(Cookies.get("compassURL")))
+    .get(convertWebcalToHttp(
+        `${Cookies.get("compassURL")}`
+        ))
     .then(function (response) {
       // SPLITS THE LONG TEXT DOCUMENT INTO USABLE CHUNKS
 
@@ -87,6 +90,9 @@ function getData(comp) {
       }
       return events;
     })
+    .catch((error)=>[
+        {"date":"20201110T040000Z", "title":"Error", "location":"Please press \"Setup\""}
+    ])
     .then(function (events) {
       // CONVERTS YUCKY ICS FORMAT DATES INTO UTC JS DATE OBJECTS.
 
@@ -104,27 +110,42 @@ class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      e: [],
+      e: []
     };
   }
 
-  componentDidMount() {
-    //var events = [];
+componentDidMount(){
+    this.reload()
+}
+  reload(){
     var comp = this;
-    //getData(comp);
-
-    // console.log(events)
+    getData(comp);
   }
-
-  changeEvents = (events) => {
-    this.setState({ e: events });
-  };
 
   render() {
     return (
-      <Stack spcaing="minor-1">
-        <Events events={this.state.e}></Events>
-      </Stack>
+      <>
+      <Header></Header>
+      <Container breakpoint="tablet">
+      <Container isFluid>
+        <Stack spcaing="minor-1">
+            {/* <Button onClick={()=>this.reload()} width="100%" palette="primary">Refresh</Button> */}
+            {
+                ()=>{if (Cookies.get("compassURL")!=undefined) {
+                    return(<Events events={this.state.e}></Events>)
+                } else {
+                    return(
+                        <Alert title="An error occurred" type="danger" variant="tint">
+                            You haven't connected your Compass calendar to North. Please press the "Setup" button in the top right hand corner to fix this problem.
+                        </Alert>
+                    )
+                }}
+            }
+            
+        </Stack>
+      </Container>
+      </Container>
+      </>
     );
   }
 }

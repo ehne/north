@@ -1,12 +1,13 @@
-import {Card,Text} from "bumbag"
+import {Card,Text, Heading, Badge, Box} from "bumbag"
+
 export default function Events(props) {
     const items = props.events;
-    console.log(items);
+    //console.log(items);
   
     const generated = items.map((i) => (
-      <Card>
-         yay
-      </Card>
+      <Box>
+         <Text>{i.title} • {i.location} • {i.date.toLocaleString()}  </Text>
+      </Box>
     ));
     return generated
 }

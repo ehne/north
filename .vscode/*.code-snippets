@@ -19,9 +19,11 @@
 		"scope":"javascript",
 		"prefix":["next-component","nc"],
 		"body":[
+			"import {$1} from \"bumbag\"",
+			"",
 			"export default function $TM_FILENAME_BASE() {",
 			"\treturn(",
-			"\t\t $1",
+			"\t\t $2",
 			"\t)",
 			"}"
 		]

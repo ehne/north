@@ -111,7 +111,7 @@ class Main extends React.Component {
   componentDidMount() {
     //var events = [];
     var comp = this;
-    getData(comp);
+    //getData(comp);
 
     // console.log(events)
   }

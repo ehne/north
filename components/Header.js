@@ -9,16 +9,15 @@ import {
   Disclosure,
   FieldWrapper,
   Input,
-  Link,
-Icon} from "bumbag";
+  Link} from "bumbag";
 import DarkModeToggle from "./darkModeToggle";
 import { useFormik } from "formik";
 import Cookies from 'js-cookie'
-import {BeakerIcon} from '@primer/octicons-react'
+import {SettingsIcon} from '@primer/octicons-react'
 
 
 export default function Header() {
-    var visi = false
+    
   const formik = useFormik({
     initialValues: {
       compassURL: Cookies.get("compassURL"),
@@ -32,7 +31,7 @@ export default function Header() {
     <TopNav>
       <TopNav.Section></TopNav.Section>
       <TopNav.Section paddingY="major-2" paddingX="major-1">
-        <TopNav.Item paddingX="major-1">
+        <TopNav.Item paddingRight="major-1">
           <Modal.State>
             <Dialog.Modal
               title="North Settings"
@@ -61,6 +60,9 @@ export default function Header() {
                   </Disclosure.Content>
                 </Disclosure.State>
               </Paragraph>
+              <Paragraph>
+                  Note: you might have to press the "Reset Private Schedule" link at the top of your compass page if there is no calendar link in the green box.
+              </Paragraph>
               <FieldWrapper label="Compass Calendar Link">
               
                 <Input
@@ -71,10 +73,11 @@ export default function Header() {
                 />
               </FieldWrapper>
             </Dialog.Modal>
-            <Modal.Disclosure {...Button.useProps({size:"small"})}>Setup</Modal.Disclosure>
+
+            <Modal.Disclosure {...Button.useProps({size:"small"})}><SettingsIcon /><Text paddingLeft="minor-1">Setup</Text></Modal.Disclosure>
           </Modal.State>
         </TopNav.Item>
-        <TopNav.Item>{/* <DarkModeToggle></DarkModeToggle> */}</TopNav.Item>
+        <TopNav.Item paddingRight="major-1"><DarkModeToggle></DarkModeToggle></TopNav.Item>
       </TopNav.Section>
 
     </TopNav>

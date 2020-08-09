@@ -165,7 +165,8 @@ class Main extends React.Component {
       e: [],
       loading: true,
       highestLoadedPage:0,
-      pageToLoadNext:1      
+      pageToLoadNext:1,
+      compassURL:Cookies.get("compassURL")   
     };
     this.cancel = null
   }
@@ -233,6 +234,7 @@ class Main extends React.Component {
     
   }
   MainContent = (props) =>{
+    console.log(Cookies.get("compassURL"))
     if (Cookies.get("compassURL") != undefined) {
       return (
         <ReactList
@@ -260,18 +262,17 @@ class Main extends React.Component {
             <Heading>North</Heading>
            
             <Stack width="100%">
-              {()=> {if(this.state.savedAlready){
-return(<Alert
-  title="An error occurred"
-  type="danger"
-  variant="tint"
->
-  You haven't connected your Compass calendar to North.
-  Please press the "Setup" button in the top right hand
-  corner to fix this problem.
-</Alert>)
-              }}}
-            
+            <Alert
+                        title="An error occurred"
+                        type="danger"
+                        variant="tint"
+                        display={this.state.compassURL != undefined?'none':''}
+                      >
+                        You haven't connected your Compass calendar to North.
+                        Please press the "Setup" button in the top right hand
+                        corner to fix this problem.
+                      </Alert>
+              
               <this.MainContent></this.MainContent>
               
             </Stack>

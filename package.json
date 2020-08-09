@@ -8,16 +8,16 @@
     "start": "next start"
   },
   "dependencies": {
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
     "@primer/octicons-react": "^10.0.0",
     "axios": "^0.19.2",
     "boxicons": "^2.0.5",
     "bumbag": "^1.0.9",
     "formik": "^2.1.5",
     "js-cookie": "^2.2.1",
-    "next": "9.5.1"
-  
+    "next": "9.5.1",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "react-list": "^0.8.15"
   },
   "devDependencies": {
     "@iconify/react": "^1.1.3"

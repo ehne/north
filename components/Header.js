@@ -24,7 +24,14 @@ export default function Header() {
       compassURL: Cookies.get("compassURL"),
     },
     onSubmit: (values) => {
-      Cookies.set("compassURL", values["compassURL"],{ expires: 365 });
+      console.log(values)
+      if(values["compassURL"]!=""){
+        Cookies.set("compassURL", values["compassURL"],{ expires: 365 });
+        
+      } else{
+        Cookies.set("compassURL", "empty",{ expires: 365 });
+      }
+        
       alert("saved");
       // this is a really yucky way of getting it to load the associated data.
       // TODO: Look into maybe using some kind of react hook or something to trigger the main state to reload.

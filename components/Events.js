@@ -1,17 +1,12 @@
-import {Card,Text, Stack, Badge, Box, Tag, Heading} from "bumbag"
+import {Card,Text, Set, Badge, Box, Tag, Heading, Group} from "bumbag"
 
 export default function Events(props) {
-    const items = props.events;
-    //console.log(items);
-    
-    const generated = items.map((i) => (
-      <Box marginBottom="major-1">
-          
-        <Text><Tag>{i.title}</Tag> <Text use="strong">{i.location}</Text> {i.date.toLocaleString()}  </Text>
-      </Box>
-    ));
+    var i = props.event
     return (
-        generated
+      <Set marginBottom="major-1" spacing="major-1" width="100%">
+        <Group><Tag variant="tint">{i.title}</Tag> <Tag palette="secondary">{i.staff}</Tag></Group>
+        <Text> <Text use="strong">{i.location}</Text> {i.date.toLocaleString()}  </Text>
+      </Set>
       
     )
 }
